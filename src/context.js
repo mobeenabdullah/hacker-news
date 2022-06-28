@@ -40,7 +40,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     fetchStories(`${API_ENDPOINT}query=${state.query}&page=${state.page}`);
-  }, [state.query]);
+  }, [state.query, state.page]);
 
   const removeStory = (id) => {
     dispatch({ type: REMOVE_STORY, payload: id });
@@ -50,8 +50,14 @@ const AppProvider = ({ children }) => {
     dispatch({ type: HANDLE_SEARCH, payload: query });
   };
 
+  const handlePage = (value) => {
+    dispatch({ type: HANDLE_PAGE, payload: value });
+  };
+
   return (
-    <AppContext.Provider value={{ ...state, removeStory, handleSearch }}>
+    <AppContext.Provider
+      value={{ ...state, removeStory, handleSearch, handlePage }}
+    >
       {children}
     </AppContext.Provider>
   );
